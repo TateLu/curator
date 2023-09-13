@@ -21,11 +21,12 @@ public class SessionTimeoutSimulation {
         CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(ZOOKEEPER_CONNECTION_STRING,
                 new ExponentialBackoffRetry(1000, 3));
         curatorFramework.start();
-
+        //15000ms
+        System.out.println("session timeout: "+curatorFramework.getZookeeperClient().getConnectionTimeoutMs());
         try {
             // Create an ephemeral node
             curatorFramework.create().withMode(CreateMode.EPHEMERAL).forPath(ZOOKEEPER_PATH);
-
+            System.out.println("create ");
             // Create a PathChildrenCache to watch the node
             PathChildrenCache pathChildrenCache = new PathChildrenCache(curatorFramework, ZOOKEEPER_PATH, true);
             pathChildrenCache.getListenable().addListener(new PathChildrenCacheListener() {
@@ -40,7 +41,7 @@ public class SessionTimeoutSimulation {
 
             // Wait for the session to expire
             Thread.sleep(5000); // Wait for 10 seconds to ensure session expiration
-
+            System.out.println("quit ");
             // Close the PathChildrenCache and CuratorFramework instances
             pathChildrenCache.close();
             curatorFramework.close();
