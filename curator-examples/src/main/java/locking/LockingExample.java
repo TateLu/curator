@@ -41,6 +41,7 @@ public class LockingExample {
         // FakeLimitedResource simulates some external resource that can only be access by one process at a time
         final FakeLimitedResource resource = new FakeLimitedResource();
 
+        //5个异步线程，争抢zookeeper的锁
         ExecutorService service = Executors.newFixedThreadPool(QTY);
         final TestingServer server = new TestingServer();
         try {

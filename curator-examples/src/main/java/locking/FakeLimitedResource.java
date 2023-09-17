@@ -33,7 +33,7 @@ public class FakeLimitedResource {
         if (!inUse.compareAndSet(false, true)) {
             throw new IllegalStateException("Needs to be used by one client at a time");
         }
-
+        //等待 （0 - 1.0） * 3ms
         try {
             Thread.sleep((long) (3 * Math.random()));
         } finally {
